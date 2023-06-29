@@ -149,9 +149,9 @@ function callSendAPI(sender_psid, response) {
       "json": request_body
   }, (err, res, body) => {
     console.log('>>>>>>>>>>>>>>>>')
-    console.log(res)
+    console.log(body)
     console.log('>>>>>>>>>>>>>>>>')
-    console.log(res)
+    console.log(err)
     console.log('----------------')
 
       if (!err) {
