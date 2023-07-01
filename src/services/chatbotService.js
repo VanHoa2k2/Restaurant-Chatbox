@@ -35,6 +35,7 @@ let handleGetStarted = (sender_psid) => {
         try {
             let response = { text: "Chào mừng bạn đến với restaurant with VanHoa." };
             await callSendAPI(sender_psid, response)
+            resolve('done')
         } catch (e) {
          reject(e);   
         }
