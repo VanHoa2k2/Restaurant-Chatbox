@@ -1,6 +1,8 @@
 require('dotenv').config();
 import request from "request";
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
+
 // process.env.NAME_VARIABLES
 let getHomepage = (req, res) => {
   return res.render('homepage.ejs');
@@ -162,9 +164,38 @@ function callSendAPI(sender_psid, response) {
   });
 }
 
+let setupProfile = async(req, res) => {
+    // call profile facebook api
+      // Construct the message body
+  let request_body = {
+    "get_started": {
+        "payload": "GET_STARTED"
+    },
+    "whitelisted_domains": ["https://restaurant-chatbox-vanhoa.onrender.com/"]
+}
+
+// Send the HTTP request to the Messenger Platform
+await request({
+    "uri": `https://graph.facebook.com/v17.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+    "qs": { "access_token": PAGE_ACCESS_TOKEN },
+    "method": "POST",
+    "json": request_body
+}, (err, res, body) => {
+    console.log(body)
+    if (!err) {
+        console.log('Setup user profile succeed!')
+    } else {
+        console.error("Unable to setup user profile:" + err);
+    }
+});
+
+    return res.send("Setup user profile succeed!")
+}
+
 module.exports = {
   getHomepage: getHomepage,
   postWebhook: postWebhook,
-  getWebhook: getWebhook
+  getWebhook: getWebhook,
+  setupProfile: setupProfile
 
 }
