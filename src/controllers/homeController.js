@@ -1,6 +1,6 @@
 require("dotenv").config();
 import request from "request";
-import chatbotService from "../services/chatbotService"
+import chatbotService from "../services/chatbotService";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
@@ -119,21 +119,24 @@ async function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  switch(payload) {
-    case 'yes':
-        response = { text: "Thanks!" };
-        break;
-        case 'no':
-            response = { text: "Oops, try sending another image." };
-        break;
-        case 'GET_STARTED':
-            await chatbotService.handleGetStarted(sender_psid)
-        break;
+  switch (payload) {
+    case "yes":
+      response = { text: "Thanks!" };
+      break;
+    case "no":
+      response = { text: "Oops, try sending another image." };
+      break;
+    case "RESTART_BOT":
+    case "GET_STARTED":
+      await chatbotService.handleGetStarted(sender_psid);
+      break;
     default:
-        response = { text: `Oops, I don't know response with postback ${payload}.` };
+      response = {
+        text: `Oops, I don't know response with postback ${payload}.`,
+      };
   }
   // Send the message to acknowledge the postback
-//   callSendAPI(sender_psid, response);
+  //   callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API
@@ -201,9 +204,56 @@ let setupProfile = async (req, res) => {
   return res.send("Setup user profile succeed!");
 };
 
+let setupPersistentMenu = async (req, res) => {
+  // call profile facebook api
+  // Construct the message body
+  let request_body = {
+    persistent_menu: [
+      {
+        locale: "default",
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: "web_url",
+            title: "Trang facebook của Văn Hòa",
+            url: "https://www.facebook.com/profile.php?id=100029248689927",
+            webview_height_ratio: "full",
+          },
+          {
+            type: "postback",
+            title: "Khởi động lại bot",
+            payload: "RESTART_BOT",
+          },
+        ],
+      },
+    ],
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  await request(
+    {
+      uri: `https://graph.facebook.com/v17.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      console.log(body);
+      if (!err) {
+        console.log("Setup persistent menu succeed!");
+      } else {
+        console.error("Unable to setup persistent menu:" + err);
+      }
+    }
+  );
+
+  return res.send("Setup persistent menu succeed!");
+};
+
 module.exports = {
   getHomepage: getHomepage,
   postWebhook: postWebhook,
   getWebhook: getWebhook,
   setupProfile: setupProfile,
+  setupPersistentMenu: setupPersistentMenu,
 };
