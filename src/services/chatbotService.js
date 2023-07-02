@@ -3,6 +3,8 @@ require("dotenv").config();
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+const IMAGE_GET_STARTED = 'https://bit.ly/eric-bot1'
+
 function callSendAPI(sender_psid, response) {
     // Construct the message body
     let request_body = {
@@ -58,13 +60,56 @@ let handleGetStarted = (sender_psid) => {
     return new Promise(async(resolve, reject) => {
         try {
             let username = await getUserName(sender_psid)
-            let response = { text: `Chào mừng bạn ${username} đến với restaurant with VanHoa.` };
-            await callSendAPI(sender_psid, response)
+            let response1 = { text: `Chào mừng ${username} đến với restaurant with VanHoa.` };
+            let response2 = sendGetStartedTemplate()
+
+            // send text message
+            await callSendAPI(sender_psid, response1)
+
+            // send generic template message
+            await callSendAPI(sender_psid, response2)
+
             resolve('done')
         } catch (e) {
          reject(e);   
         }
     });
+}
+
+let sendGetStartedTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Xin chào bạn đến với nhà hàng của Văn Hòa",
+            subtitle: "Dưới đây là các lựa chọn của nhà hàng",
+            image_url: IMAGE_GET_STARTED,
+            buttons: [
+              {
+                type: "postback",
+                title: "MENU CHÍNH",
+                payload: "MAIN_MENU",
+              },
+              {
+                type: "postback",
+                title: "ĐẶT BÀN",
+                payload: "RESERVE_TABLE",
+              },
+              {
+                type: "postback",
+                title: "HƯỚNG DẪN SỬ DỤNG Bot",
+                payload: "GUIDE_TO_USE",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response
 }
 
 module.exports = {
