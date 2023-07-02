@@ -6,6 +6,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const IMAGE_GET_STARTED = "https://bit.ly/eric-bot1";
 const IMAGE_MAIN_MENU_2 = "https://bit.ly/eric-bot-2";
 const IMAGE_MAIN_MENU_3 = "https://bit.ly/eric-bot-3";
+const IMAGE_MAIN_MENU_4 = "https://bit.ly/eric-bot-4";
 
 const IMAGE_VIEW_APPETIZERS= "https://bit.ly/eric-bot-5";
 const IMAGE_VIEW_FISH= "https://bit.ly/eric-bot-6";
@@ -121,6 +122,7 @@ let getStartedTemplate = () => {
 };
 
 let handleSendMainMenu = (sender_psid) => {
+  console.log("check")
   return new Promise(async (resolve, reject) => {
     try {
       let response1 = getMainMenuTemplate();
