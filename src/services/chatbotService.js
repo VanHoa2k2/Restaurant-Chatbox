@@ -12,6 +12,8 @@ const IMAGE_VIEW_APPETIZERS= "https://bit.ly/eric-bot-5";
 const IMAGE_VIEW_FISH= "https://bit.ly/eric-bot-6";
 const IMAGE_VIEW_MEAT= "https://bit.ly/eric-bot-7";
 
+const IMAGE_BACK_MAIN_MENU = "https://bit.ly/eric-bot-8"
+
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
@@ -129,9 +131,6 @@ let handleSendMainMenu = (sender_psid) => {
 
       // send text message
       await callSendAPI(sender_psid, response1);
-
-      // send generic template message
-      await callSendAPI(sender_psid, response2);
 
       resolve("done");
     } catch (e) {
@@ -258,6 +257,18 @@ let getLunchMenuTemplate = () => {
               },
             ],
           },
+          {
+            title: "Quay trở lại",
+            subtitle: "Quay trở lại Menu chính",
+            image_url: IMAGE_BACK_MAIN_MENU,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRỞ Lại",
+                payload: "BACK_TO_MAIN_MENU",
+              },
+            ],
+          },
         ],
       },
     },
@@ -272,9 +283,6 @@ let handleSendDinnerMenu = () => {
 
       // send text message
       await callSendAPI(sender_psid, response1);
-
-      // send generic template message
-      await callSendAPI(sender_psid, response2);
 
       resolve("done");
     } catch (e) {
@@ -340,9 +348,14 @@ let getDinnerMenuTemplate = () => {
   return response;
 };
 
+let handleBackToMainMenu = async(sender_psid) => {
+  await handleSendMainMenu(sender_psid)
+}
+
 module.exports = {
   handleGetStarted: handleGetStarted,
   handleSendMainMenu: handleSendMainMenu,
   handleSendLunchMenu: handleSendLunchMenu,
   handleSendDinnerMenu: handleSendDinnerMenu,
+  handleBackToMainMenu: handleBackToMainMenu
 };
