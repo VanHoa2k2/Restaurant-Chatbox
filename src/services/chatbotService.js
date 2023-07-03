@@ -8,23 +8,23 @@ const IMAGE_MAIN_MENU_2 = "https://bit.ly/eric-bot-2";
 const IMAGE_MAIN_MENU_3 = "https://bit.ly/eric-bot-3";
 const IMAGE_MAIN_MENU_4 = "https://bit.ly/eric-bot-4";
 
-const IMAGE_VIEW_APPETIZERS= "https://bit.ly/eric-bot-5";
-const IMAGE_VIEW_FISH= "https://bit.ly/eric-bot-6";
-const IMAGE_VIEW_MEAT= "https://bit.ly/eric-bot-7";
+const IMAGE_VIEW_APPETIZERS = "https://bit.ly/eric-bot-5";
+const IMAGE_VIEW_FISH = "https://bit.ly/eric-bot-6";
+const IMAGE_VIEW_MEAT = "https://bit.ly/eric-bot-7";
 
-const IMAGE_BACK_MAIN_MENU = "https://bit.ly/eric-bot-8"
+const IMAGE_BACK_MAIN_MENU = "https://bit.ly/eric-bot-8";
 
-const IMAGE_DETAIL_APPETIZER_1 = "https://bit.ly/eric-bot-9"
-const IMAGE_DETAIL_APPETIZER_2 = "https://bit.ly/eric-bot-10"
-const IMAGE_DETAIL_APPETIZER_3 = "https://bit.ly/eric-bot-11"
+const IMAGE_DETAIL_APPETIZER_1 = "https://bit.ly/eric-bot-9";
+const IMAGE_DETAIL_APPETIZER_2 = "https://bit.ly/eric-bot-10";
+const IMAGE_DETAIL_APPETIZER_3 = "https://bit.ly/eric-bot-11";
 
-const IMAGE_DETAIL_FISH_1 = "https://bit.ly/eric-bot-12"
-const IMAGE_DETAIL_FISH_2 = "https://bit.ly/eric-bot-13-1"
-const IMAGE_DETAIL_FISH_3 = "https://bit.ly/eric-bot-14"
+const IMAGE_DETAIL_FISH_1 = "https://bit.ly/eric-bot-12";
+const IMAGE_DETAIL_FISH_2 = "https://bit.ly/eric-bot-13-1";
+const IMAGE_DETAIL_FISH_3 = "https://bit.ly/eric-bot-14";
 
-const IMAGE_DETAIL_MEAT_1 = "https://bit.ly/eric-bot-15"
-const IMAGE_DETAIL_MEAT_2 = "https://bit.ly/eric-bot-16"
-const IMAGE_DETAIL_MEAT_3 = "https://bit.ly/eric-bot-17"
+const IMAGE_DETAIL_MEAT_1 = "https://bit.ly/eric-bot-15";
+const IMAGE_DETAIL_MEAT_2 = "https://bit.ly/eric-bot-16";
+const IMAGE_DETAIL_MEAT_3 = "https://bit.ly/eric-bot-17";
 
 async function callSendAPI(sender_psid, response) {
   // Construct the message body
@@ -35,8 +35,8 @@ async function callSendAPI(sender_psid, response) {
     message: response,
   };
 
-  await sendMarkReadMessage(sender_psid)
-  await sendTypingon(sender_psid)
+  await sendMarkReadMessage(sender_psid);
+  await sendTypingon(sender_psid);
 
   // Send the HTTP request to the Messenger Platform
   request(
@@ -62,7 +62,7 @@ function sendTypingon(sender_psid, response) {
     recipient: {
       id: sender_psid,
     },
-    sender_action: typing_on,
+    sender_action: "typing_on",
   };
 
   // Send the HTTP request to the Messenger Platform
@@ -89,7 +89,7 @@ function sendMarkReadMessage(sender_psid, response) {
     recipient: {
       id: sender_psid,
     },
-    sender_action: mark_seen,
+    sender_action: "mark_seen",
   };
 
   // Send the HTTP request to the Messenger Platform
@@ -193,7 +193,7 @@ let getStartedTemplate = () => {
 };
 
 let handleSendMainMenu = (sender_psid) => {
-  console.log("check")
+  console.log("check");
   return new Promise(async (resolve, reject) => {
     try {
       let response1 = getMainMenuTemplate();
@@ -417,9 +417,9 @@ let getDinnerMenuTemplate = () => {
   return response;
 };
 
-let handleBackToMainMenu = async(sender_psid) => {
-  await handleSendMainMenu(sender_psid)
-}
+let handleBackToMainMenu = async (sender_psid) => {
+  await handleSendMainMenu(sender_psid);
+};
 
 let handleDetailViewAppetizers = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
@@ -434,7 +434,7 @@ let handleDetailViewAppetizers = (sender_psid) => {
       reject(e);
     }
   });
-}
+};
 
 let getDetailViewAppetizersTemplate = () => {
   let response = {
@@ -445,8 +445,7 @@ let getDetailViewAppetizersTemplate = () => {
         elements: [
           {
             title: "Dưa hấu Vmart",
-            subtitle:
-              "50.000đ/1kg",
+            subtitle: "50.000đ/1kg",
             image_url: IMAGE_DETAIL_APPETIZER_1,
           },
           {
@@ -456,8 +455,7 @@ let getDetailViewAppetizersTemplate = () => {
           },
           {
             title: "Ổi",
-            subtitle:
-              "30.000đ/1kg",
+            subtitle: "30.000đ/1kg",
             image_url: IMAGE_DETAIL_APPETIZER_3,
           },
           {
@@ -492,7 +490,7 @@ let handleDetailViewFish = (sender_psid) => {
       reject(e);
     }
   });
-}
+};
 
 let getDetailViewFishTemplate = () => {
   let response = {
@@ -503,8 +501,7 @@ let getDetailViewFishTemplate = () => {
         elements: [
           {
             title: "Cá hồi châu âu",
-            subtitle:
-              "150.000đ/1kg",
+            subtitle: "150.000đ/1kg",
             image_url: IMAGE_DETAIL_FISH_1,
           },
           {
@@ -514,8 +511,7 @@ let getDetailViewFishTemplate = () => {
           },
           {
             title: "Cá ngừ châu mỹ",
-            subtitle:
-              "300.000đ/1kg",
+            subtitle: "300.000đ/1kg",
             image_url: IMAGE_DETAIL_FISH_3,
           },
           {
@@ -550,7 +546,7 @@ let handleDetailViewMeat = (sender_psid) => {
       reject(e);
     }
   });
-}
+};
 
 let getDetailViewMeatTemplate = () => {
   let response = {
@@ -561,8 +557,7 @@ let getDetailViewMeatTemplate = () => {
         elements: [
           {
             title: "Thịt lợn hun khói",
-            subtitle:
-              "500.000đ/1kg",
+            subtitle: "500.000đ/1kg",
             image_url: IMAGE_DETAIL_MEAT_1,
           },
           {
@@ -572,8 +567,7 @@ let getDetailViewMeatTemplate = () => {
           },
           {
             title: "Thịt trâu hải phòng",
-            subtitle:
-              "300.000đ/1kg",
+            subtitle: "300.000đ/1kg",
             image_url: IMAGE_DETAIL_MEAT_3,
           },
           {
