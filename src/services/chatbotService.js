@@ -347,7 +347,7 @@ let getLunchMenuTemplate = () => {
   return response;
 };
 
-let handleSendDinnerMenu = () => {
+let handleSendDinnerMenu = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       let response1 = getDinnerMenuTemplate();
