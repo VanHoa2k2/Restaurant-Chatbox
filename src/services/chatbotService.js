@@ -26,6 +26,8 @@ const IMAGE_DETAIL_MEAT_1 = "https://bit.ly/eric-bot-15";
 const IMAGE_DETAIL_MEAT_2 = "https://bit.ly/eric-bot-16";
 const IMAGE_DETAIL_MEAT_3 = "https://bit.ly/eric-bot-17";
 
+const IMAGE_DETAIL_ROOMS = "https://bit.ly/eric-bot-18"
+
 async function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
@@ -368,45 +370,50 @@ let getDinnerMenuTemplate = () => {
         template_type: "generic",
         elements: [
           {
-            title: "Menu của nhà hàng",
-            subtitle:
-              "Chúng tôi hân hạnh mang đến cho bạn thực đơn phong phú cho bữa trưa hoặc bữa tối",
-            image_url: IMAGE_MAIN_MENU_2,
+            title: "Món tráng miệng",
+            subtitle: "Nhà hàng có nhiều món tráng miệng hấp dẫn",
+            image_url: IMAGE_VIEW_APPETIZERS,
             buttons: [
               {
                 type: "postback",
-                title: "BỮA TRƯA",
-                payload: "LUNCH_MENU",
-              },
-              {
-                type: "postback",
-                title: "BỮA TỐI",
-                payload: "DINNER_MENU",
+                title: "XEM CHI TIẾT",
+                payload: "VIEW_APPETIZERS",
               },
             ],
           },
           {
-            title: "Giờ mở cửa",
-            subtitle: "T2 -T6 10AM - 11PM | T7 5PM - 10PM | CN 5PM - 9PM",
-            image_url: IMAGE_MAIN_MENU_3,
+            title: "Cá bảy màu",
+            subtitle: "Cá nước mặn và cá nước ngọt",
+            image_url: IMAGE_VIEW_FISH,
             buttons: [
               {
                 type: "postback",
-                title: "ĐẶT BÀN",
-                payload: "RESERVE_TABLE",
+                title: "XEM CHI TIẾT",
+                payload: "VIEW_FISH",
               },
             ],
           },
           {
-            title: "Không gian nhà hàng",
-            subtitle:
-              "Nhà hàng có sức chứa lên đến 300 khách ngồi và phục vụ các bữa tiệc lớn",
-            image_url: IMAGE_MAIN_MENU_4,
+            title: "Thịt hun khối",
+            subtitle: "Đảm bảo chất lượng hàng đầu",
+            image_url: IMAGE_VIEW_MEAT,
             buttons: [
               {
                 type: "postback",
-                title: "CHI TIẾT",
-                payload: "SHOW_ROOMS",
+                title: "XEM CHI TIẾT",
+                payload: "VIEW_MEAT",
+              },
+            ],
+          },
+          {
+            title: "Quay trở lại",
+            subtitle: "Quay trở lại Menu chính",
+            image_url: IMAGE_BACK_MAIN_MENU,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRỞ Lại",
+                payload: "BACK_TO_MAIN_MENU",
               },
             ],
           },
@@ -589,6 +596,65 @@ let getDetailViewMeatTemplate = () => {
   return response;
 };
 
+let getImageRoomsTemplate = () => {
+  let response = {
+    "attachment":{
+      "type":"image", 
+      "payload":{
+        "url": IMAGE_DETAIL_ROOMS, 
+        "is_reusable":true
+      }
+    }
+  };
+
+  return response
+}
+
+let getButtonRoomsTemplate = () => {
+  let response = {
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":"Nhà hàng có thể phục vụ tối đa 300 khách",
+        "buttons":[
+          {
+            type: "postback",
+            title: "Menu chính",
+            payload: "MAIN_MENU",
+          },
+          {
+            type: "postback",
+            title: "ĐẶT BÀN",
+            payload: "RESERVE_TABLE",
+          },
+        ]
+      }
+    }
+  }
+
+  return response
+}
+
+let handleShowDetailRooms = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // send an image
+      let response1 = getImageRoomsTemplate();
+
+      // send a button template: text, buttons
+      let response2 = getButtonRoomsTemplate();
+
+      await callSendAPI(sender_psid, response1);
+      await callSendAPI(sender_psid, response2);
+
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
   handleGetStarted: handleGetStarted,
   handleSendMainMenu: handleSendMainMenu,
@@ -598,4 +664,5 @@ module.exports = {
   handleDetailViewAppetizers: handleDetailViewAppetizers,
   handleDetailViewFish: handleDetailViewFish,
   handleDetailViewMeat: handleDetailViewMeat,
+  handleShowDetailRooms: handleShowDetailRooms,
 };
