@@ -19,14 +19,14 @@ const IMAGE_DETAIL_APPETIZER_2 = "https://bit.ly/eric-bot-10"
 const IMAGE_DETAIL_APPETIZER_3 = "https://bit.ly/eric-bot-11"
 
 const IMAGE_DETAIL_FISH_1 = "https://bit.ly/eric-bot-12"
-const IMAGE_DETAIL_FISH_2 = "https://bit.ly/eric-bot-13"
+const IMAGE_DETAIL_FISH_2 = "https://bit.ly/eric-bot-13-1"
 const IMAGE_DETAIL_FISH_3 = "https://bit.ly/eric-bot-14"
 
 const IMAGE_DETAIL_MEAT_1 = "https://bit.ly/eric-bot-15"
 const IMAGE_DETAIL_MEAT_2 = "https://bit.ly/eric-bot-16"
 const IMAGE_DETAIL_MEAT_3 = "https://bit.ly/eric-bot-17"
 
-function callSendAPI(sender_psid, response) {
+async function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
     recipient: {
@@ -34,6 +34,9 @@ function callSendAPI(sender_psid, response) {
     },
     message: response,
   };
+
+  await sendMarkReadMessage(sender_psid)
+  await sendTypingon(sender_psid)
 
   // Send the HTTP request to the Messenger Platform
   request(
@@ -46,6 +49,60 @@ function callSendAPI(sender_psid, response) {
     (err, res, body) => {
       if (!err) {
         console.log("message sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+}
+
+function sendTypingon(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    recipient: {
+      id: sender_psid,
+    },
+    sender_action: typing_on,
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  request(
+    {
+      uri: "https://graph.facebook.com/v17.0/me/messages",
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("sendTypingon sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+}
+
+function sendMarkReadMessage(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    recipient: {
+      id: sender_psid,
+    },
+    sender_action: mark_seen,
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  request(
+    {
+      uri: "https://graph.facebook.com/v17.0/me/messages",
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("sendTypingon sent!");
       } else {
         console.error("Unable to send message:" + err);
       }
