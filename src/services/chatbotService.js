@@ -14,6 +14,18 @@ const IMAGE_VIEW_MEAT= "https://bit.ly/eric-bot-7";
 
 const IMAGE_BACK_MAIN_MENU = "https://bit.ly/eric-bot-8"
 
+const IMAGE_DETAIL_APPETIZER_1 = "https://bit.ly/eric-bot-9"
+const IMAGE_DETAIL_APPETIZER_2 = "https://bit.ly/eric-bot-10"
+const IMAGE_DETAIL_APPETIZER_3 = "https://bit.ly/eric-bot-11"
+
+const IMAGE_DETAIL_FISH_1 = "https://bit.ly/eric-bot-12"
+const IMAGE_DETAIL_FISH_2 = "https://bit.ly/eric-bot-13"
+const IMAGE_DETAIL_FISH_3 = "https://bit.ly/eric-bot-14"
+
+const IMAGE_DETAIL_MEAT_1 = "https://bit.ly/eric-bot-15"
+const IMAGE_DETAIL_MEAT_2 = "https://bit.ly/eric-bot-16"
+const IMAGE_DETAIL_MEAT_3 = "https://bit.ly/eric-bot-17"
+
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
@@ -352,10 +364,187 @@ let handleBackToMainMenu = async(sender_psid) => {
   await handleSendMainMenu(sender_psid)
 }
 
+let handleDetailViewAppetizers = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response1 = getDetailViewAppetizersTemplate();
+
+      // send text message
+      await callSendAPI(sender_psid, response1);
+
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+let getDetailViewAppetizersTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Dưa hấu Vmart",
+            subtitle:
+              "50.000đ/1kg",
+            image_url: IMAGE_DETAIL_APPETIZER_1,
+          },
+          {
+            title: "Xoài",
+            subtitle: "20.000đ/1kg",
+            image_url: IMAGE_DETAIL_APPETIZER_2,
+          },
+          {
+            title: "Ổi",
+            subtitle:
+              "30.000đ/1kg",
+            image_url: IMAGE_DETAIL_APPETIZER_3,
+          },
+          {
+            title: "Quay trở lại",
+            subtitle: "Quay trở lại Menu chính",
+            image_url: IMAGE_BACK_MAIN_MENU,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRỞ Lại",
+                payload: "BACK_TO_MAIN_MENU",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response;
+};
+
+let handleDetailViewFish = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response1 = getDetailViewFishTemplate();
+
+      // send text message
+      await callSendAPI(sender_psid, response1);
+
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+let getDetailViewFishTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Cá hồi châu âu",
+            subtitle:
+              "150.000đ/1kg",
+            image_url: IMAGE_DETAIL_FISH_1,
+          },
+          {
+            title: "Cá chép ông táo",
+            subtitle: "200.000đ/1kg",
+            image_url: IMAGE_DETAIL_FISH_2,
+          },
+          {
+            title: "Cá ngừ châu mỹ",
+            subtitle:
+              "300.000đ/1kg",
+            image_url: IMAGE_DETAIL_FISH_3,
+          },
+          {
+            title: "Quay trở lại",
+            subtitle: "Quay trở lại Menu chính",
+            image_url: IMAGE_BACK_MAIN_MENU,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRỞ Lại",
+                payload: "BACK_TO_MAIN_MENU",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response;
+};
+
+let handleDetailViewMeat = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response1 = getDetailViewMeatTemplate();
+
+      // send text message
+      await callSendAPI(sender_psid, response1);
+
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+let getDetailViewMeatTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Thịt lợn hun khói",
+            subtitle:
+              "500.000đ/1kg",
+            image_url: IMAGE_DETAIL_MEAT_1,
+          },
+          {
+            title: "Thịt bò châu mỹ",
+            subtitle: "200.000đ/1kg",
+            image_url: IMAGE_DETAIL_MEAT_2,
+          },
+          {
+            title: "Thịt trâu hải phòng",
+            subtitle:
+              "300.000đ/1kg",
+            image_url: IMAGE_DETAIL_MEAT_3,
+          },
+          {
+            title: "Quay trở lại",
+            subtitle: "Quay trở lại Menu chính",
+            image_url: IMAGE_BACK_MAIN_MENU,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRỞ Lại",
+                payload: "BACK_TO_MAIN_MENU",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response;
+};
+
 module.exports = {
   handleGetStarted: handleGetStarted,
   handleSendMainMenu: handleSendMainMenu,
   handleSendLunchMenu: handleSendLunchMenu,
   handleSendDinnerMenu: handleSendDinnerMenu,
-  handleBackToMainMenu: handleBackToMainMenu
+  handleBackToMainMenu: handleBackToMainMenu,
+  handleDetailViewAppetizers: handleDetailViewAppetizers,
+  handleDetailViewFish: handleDetailViewFish,
+  handleDetailViewMeat: handleDetailViewMeat,
 };
