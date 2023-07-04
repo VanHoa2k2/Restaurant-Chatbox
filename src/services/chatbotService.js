@@ -179,7 +179,7 @@ let getStartedTemplate = () => {
                 type: "web_url",
                 url: `${process.env.URL_WEB_VIEW_ORDER}`,
                 title: "ĐẶT BÀN",
-                webview_height_ratio: "compact",
+                webview_height_ratio: "tall",
                 messenger_extensions: true
               },
               {
@@ -246,7 +246,7 @@ let getMainMenuTemplate = () => {
                 type: "web_url",
                 url: `${process.env.URL_WEB_VIEW_ORDER}`,
                 title: "ĐẶT BÀN",
-                webview_height_ratio: "compact",
+                webview_height_ratio: "tall",
                 messenger_extensions: true
               },
             ],
@@ -631,7 +631,7 @@ let getButtonRoomsTemplate = () => {
             type: "web_url",
             url: `${process.env.URL_WEB_VIEW_ORDER}`,
             title: "ĐẶT BÀN",
-            webview_height_ratio: "compact",
+            webview_height_ratio: "tall",
             messenger_extensions: true
           },
         ]
@@ -671,4 +671,5 @@ module.exports = {
   handleDetailViewFish: handleDetailViewFish,
   handleDetailViewMeat: handleDetailViewMeat,
   handleShowDetailRooms: handleShowDetailRooms,
+  callSendAPI: callSendAPI,
 };
