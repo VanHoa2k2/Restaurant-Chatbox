@@ -77,8 +77,8 @@ function handleClickButtonReserveTable() {
           // an error occurred
           console.log(err);
           callAjax(data)
-          $('customerInfor').css("display", "none")
-          $('handleError').css("display", "block")
+          $('#customerInfor').css("display", "none")
+          $('#handleError').css("display", "block")
         }
         ); 
     }
