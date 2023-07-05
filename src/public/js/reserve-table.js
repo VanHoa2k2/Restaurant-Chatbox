@@ -71,33 +71,27 @@ function handleClickButtonReserveTable() {
       MessengerExtensions.requestCloseBrowser(
         function success() {
           // webview closed
-          callAjax(data)
         },
         function error(err) {
           // an error occurred
           console.log(err);
-          callAjax(data)
-          $('#customerInfor').css("display", "none")
-          $('#handleError').css("display", "block")
         }
-      );
-
-      //send data to node.js server
-
+        );
+        
+        //send data to node.js server
+        $.ajax({
+          url: `${window.location.origin}/reserve-table-ajax`,
+          method: "POST",
+          data: data,
+          success: function (data) {
+            console.log(data);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+        $('customerInfor').css("display", "none")
+        $('handleError').css("display", "block")
     }
-  });
-}
-
-const callAjax = (data) => {
-  $.ajax({
-    url: `${window.location.origin}/reserve-table-ajax`,
-    method: "POST",
-    data: data,
-    success: function (data) {
-      console.log(data);
-    },
-    error: function (error) {
-      console.log(error);
-    },
   });
 }
