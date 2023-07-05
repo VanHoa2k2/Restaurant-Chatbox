@@ -24,11 +24,17 @@
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/reserve-table.js"></script>
 
+    <style>
+        .handle-error {
+            display: none;
+            padding: 15px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container fix-height">
-        <div class="row">
+        <div class="row" id="customerInfor">
             <div class="col-12">
                 <div class="text-center mt-3">
                     <span class="title">Thông tin khách hàng</span>
@@ -51,6 +57,12 @@
                 <button class="btn btn-primary" id="btnReserveTable"> ĐẶT BÀN </button>
             </div>
 
+        </div>
+
+        <div class="row handle-error" id="handleError">
+            <h5>
+                Thông tin của bạn đã được ghi nhận thành công! Vui lòng đóng popup này.
+            </h5>
         </div>
 
     </div>
