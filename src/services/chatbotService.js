@@ -26,7 +26,9 @@ const IMAGE_DETAIL_MEAT_1 = "https://bit.ly/eric-bot-15";
 const IMAGE_DETAIL_MEAT_2 = "https://bit.ly/eric-bot-16";
 const IMAGE_DETAIL_MEAT_3 = "https://bit.ly/eric-bot-17";
 
-const IMAGE_DETAIL_ROOMS = "https://bit.ly/eric-bot-18"
+const IMAGE_DETAIL_ROOMS = "https://bit.ly/eric-bot-18";
+
+const IMAGE_GIF_WELCOME = "https://bit.ly/eric-bot-1-2";
 
 async function callSendAPI(sender_psid, response) {
   // Construct the message body
@@ -143,13 +145,18 @@ let handleGetStarted = (sender_psid) => {
       let response1 = {
         text: `Chào mừng ${username} đến với restaurant with VanHoa.`,
       };
-      let response2 = getStartedTemplate(sender_psid);
+      // let response2 = getStartedTemplate(sender_psid);
+      let response2 = getImageGetStartedTemplate(sender_psid);
+      let response3 = getStartedQuickReplyTemplate(sender_psid);
 
       // send text message
       await callSendAPI(sender_psid, response1);
 
-      // send generic template message
+      // send an image
       await callSendAPI(sender_psid, response2);
+
+      // send quick reply
+      await callSendAPI(sender_psid, response3);
 
       resolve("done");
     } catch (e) {
@@ -180,7 +187,7 @@ let getStartedTemplate = (senderID) => {
                 url: `${process.env.URL_WEB_VIEW_ORDER}/${senderID}`,
                 title: "ĐẶT BÀN",
                 webview_height_ratio: "tall",
-                messenger_extensions: true
+                messenger_extensions: true,
               },
               {
                 type: "postback",
@@ -192,6 +199,44 @@ let getStartedTemplate = (senderID) => {
         ],
       },
     },
+  };
+  return response;
+};
+
+let getImageGetStartedTemplate = () => {
+  let response = {
+    attachment: {
+      type: "image",
+      payload: {
+        url: IMAGE_GIF_WELCOME,
+        is_reusable: true,
+      },
+    },
+  };
+
+  return response;
+};
+
+let getStartedQuickReplyTemplate = () => {
+  let response = {
+    text: "Dưới đây là các lựa chọn của nhà hàng:",
+    quick_replies: [
+      {
+        content_type: "text",
+        title: "MENU CHÍNH",
+        payload: "MAIN MENU",
+      },
+      {
+        content_type: "text",
+        title: "ĐẶT BÀN",
+        payload: "<POSTBACK_PAYLOAD>",
+      },
+      {
+        content_type: "text",
+        title: "HƯỚNG DẪN SỬ DỤNG BOT",
+        payload: "GUIDE_TO_USE",
+      },
+    ],
   };
   return response;
 };
@@ -247,7 +292,7 @@ let getMainMenuTemplate = (senderID) => {
                 url: `${process.env.URL_WEB_VIEW_ORDER}/${senderID}`,
                 title: "ĐẶT BÀN",
                 webview_height_ratio: "tall",
-                messenger_extensions: true
+                messenger_extensions: true,
               },
             ],
           },
@@ -602,26 +647,26 @@ let getDetailViewMeatTemplate = () => {
 
 let getImageRoomsTemplate = () => {
   let response = {
-    "attachment":{
-      "type":"image", 
-      "payload":{
-        "url": IMAGE_DETAIL_ROOMS, 
-        "is_reusable":true
-      }
-    }
+    attachment: {
+      type: "image",
+      payload: {
+        url: IMAGE_DETAIL_ROOMS,
+        is_reusable: true,
+      },
+    },
   };
 
-  return response
-}
+  return response;
+};
 
 let getButtonRoomsTemplate = (senderID) => {
   let response = {
-    "attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"Nhà hàng có thể phục vụ tối đa 300 khách",
-        "buttons":[
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "button",
+        text: "Nhà hàng có thể phục vụ tối đa 300 khách",
+        buttons: [
           {
             type: "postback",
             title: "Menu chính",
@@ -632,15 +677,15 @@ let getButtonRoomsTemplate = (senderID) => {
             url: `${process.env.URL_WEB_VIEW_ORDER}/${senderID}`,
             title: "ĐẶT BÀN",
             webview_height_ratio: "tall",
-            messenger_extensions: true
+            messenger_extensions: true,
           },
-        ]
-      }
-    }
-  }
+        ],
+      },
+    },
+  };
 
-  return response
-}
+  return response;
+};
 
 let handleShowDetailRooms = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
@@ -659,7 +704,7 @@ let handleShowDetailRooms = (sender_psid) => {
       reject(e);
     }
   });
-}
+};
 
 module.exports = {
   handleGetStarted: handleGetStarted,
