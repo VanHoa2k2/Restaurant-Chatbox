@@ -10,10 +10,9 @@ const SPEADSHEET_ID = process.env.SPEADSHEET_ID;
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 
-
 let writeDataToGoogleSheet = async (data) => {
   let currentDate = new Date();
-  const format = "HH:mm DD/MM/YYYY"
+  const format = "HH:mm DD/MM/YYYY";
   let formatedDate = moment(currentDate).format(format);
 
   // Initialize auth - see https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication
@@ -34,14 +33,13 @@ let writeDataToGoogleSheet = async (data) => {
   const sheet = doc.sheetsByIndex[0]; // or use `doc.sheetsById[id]` or `doc.sheetsByTitle[title]`
 
   // append rows
-  await sheet.addRow(
-    {
-        "Tên Facebook": data.username,
-        "Email": data.email,
-        "Số điện thoại": `'` + data.phoneNumber,
-        "Thời gian": formatedDate,
-        "Tên khách hàng": data.customerName
-    });
+  await sheet.addRow({
+    "Tên Facebook": data.username,
+    Email: data.email,
+    "Số điện thoại": data.phoneNumber,
+    "Thời gian": formatedDate,
+    "Tên khách hàng": data.customerName,
+  });
 };
 
 // process.env.NAME_VARIABLES
@@ -323,16 +321,16 @@ let handleReserveTable = (req, res) => {
 
 let handlePostReserveTable = async (req, res) => {
   try {
-    let username = await chatbotService.getUserName(req.body.psid)
+    let username = await chatbotService.getUserName(req.body.psid);
 
     // write data to google sheet
-    let data =     {
+    let data = {
       username: username,
       email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      customerName: req.body.customerName
-  }
-    await writeDataToGoogleSheet(data)
+      phoneNumber: `'${req.body.phoneNumber}`,
+      customerName: req.body.customerName,
+    };
+    await writeDataToGoogleSheet(data);
 
     let customerName = "";
     if (req.body.customerName === "") {
