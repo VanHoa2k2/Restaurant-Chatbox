@@ -13,7 +13,7 @@ const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 let writeDataToGoogleSheet = async (data) => {
   let currentDate = new Date();
   const format = "HH:mm DD/MM/YYYY";
-  let formatedDate = new Date().toLocaleString("vi-VN", { timezone: "Asia/Ho_Chi_Minh"})
+  let formatedDate = new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh"})
 
   // Initialize auth - see https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication
   const serviceAccountAuth = new JWT({
