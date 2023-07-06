@@ -24,10 +24,7 @@ let writeDataToGoogleSheet = async (data) => {
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
 
-  const doc = new GoogleSpreadsheet(
-    "<the sheet ID from the url>",
-    serviceAccountAuth
-  );
+  const doc = new GoogleSpreadsheet(SPEADSHEET_ID, serviceAccountAuth);
 
   await doc.loadInfo(); // loads document properties and worksheets
   const sheet = doc.sheetsByIndex[0]; // or use `doc.sheetsById[id]` or `doc.sheetsByTitle[title]`
@@ -331,7 +328,7 @@ let handlePostReserveTable = async (req, res) => {
       customerName: req.body.customerName,
     };
 
-    console.log(data)
+    console.log(data);
     await writeDataToGoogleSheet(data);
 
     let customerName = "";
