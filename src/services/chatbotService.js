@@ -31,7 +31,9 @@ const IMAGE_DETAIL_ROOMS = "https://bit.ly/eric-bot-18";
 const IMAGE_GIF_WELCOME = "https://bit.ly/eric-bot-1-2";
 
 async function callSendAPI(sender_psid, response) {
-  // Construct the message body
+  return new Promise(async(resolve, reject) => {
+    try {
+      // Construct the message body
   let request_body = {
     recipient: {
       id: sender_psid,
@@ -52,12 +54,17 @@ async function callSendAPI(sender_psid, response) {
     },
     (err, res, body) => {
       if (!err) {
-        console.log("message sent!");
+        resolve("message sent!");
       } else {
         console.error("Unable to send message:" + err);
       }
     }
   );
+    } catch (e) {
+      reject(e);
+    }
+  })
+  
 }
 
 function sendTypingon(sender_psid, response) {
