@@ -241,7 +241,7 @@ let getStartedQuickReplyTemplate = () => {
       },
       {
         content_type: "text",
-        title: "HƯỚNG DẪN SỬ DỤNG BOT",
+        title: "HD SỬ DỤNG BOT",
         payload: "GUIDE_TO_USE",
       },
     ],

@@ -100,8 +100,18 @@ let getWebhook = (req, res) => {
 };
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
   let response;
+
+  // check messages for quick replies
+  if (received_message.quick_reply && received_message.quick_reply.payload) {
+    if(received_message.quick_reply.payload === 'MAIN_MENU') {
+      await chatbotService.handleSendMenu(sender_psid)
+    }
+    if(received_message.quick_reply.payload === 'GUIDE_TO_USE') {
+      
+    }
+  }
 
   // Checks if the message contains text
   if (received_message.text) {
