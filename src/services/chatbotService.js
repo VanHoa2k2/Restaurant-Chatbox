@@ -232,7 +232,7 @@ let getStartedQuickReplyTemplate = () => {
       {
         content_type: "text",
         title: "MENU CHÍNH",
-        payload: "MAIN MENU",
+        payload: "MAIN_MENU",
       },
       {
         content_type: "text",
