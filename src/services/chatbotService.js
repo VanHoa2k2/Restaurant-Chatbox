@@ -147,6 +147,7 @@ let handleGetStarted = (sender_psid) => {
       };
       // let response2 = getStartedTemplate(sender_psid);
       let response2 = getImageGetStartedTemplate(sender_psid);
+      console.log(response2);
       let response3 = getStartedQuickReplyTemplate(sender_psid);
 
       // send text message
