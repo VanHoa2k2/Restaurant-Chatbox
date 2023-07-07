@@ -13,7 +13,9 @@ const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 let writeDataToGoogleSheet = async (data) => {
   let currentDate = new Date();
   const format = "HH:mm DD/MM/YYYY";
-  let formatedDate = new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh"})
+  let formatedDate = new Date().toLocaleString("vi-VN", {
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
 
   // Initialize auth - see https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication
   const serviceAccountAuth = new JWT({
@@ -105,13 +107,13 @@ async function handleMessage(sender_psid, received_message) {
 
   // check messages for quick replies
   if (received_message.quick_reply && received_message.quick_reply.payload) {
-    if(received_message.quick_reply.payload === 'MAIN_MENU') {
-      await chatbotService.handleSendMainMenu(sender_psid)
+    if (received_message.quick_reply.payload === "MAIN_MENU") {
+      await chatbotService.handleSendMainMenu(sender_psid);
     }
-    if(received_message.quick_reply.payload === 'GUIDE_TO_USE') {
-
+    if (received_message.quick_reply.payload === "GUIDE_TO_USE") {
+      await chatbotService.handleGuideToUseBot(sender_psid);
     }
-    return
+    return;
   }
 
   // Checks if the message contains text
@@ -178,6 +180,9 @@ async function handlePostback(sender_psid, received_postback) {
       break;
     case "MAIN_MENU":
       await chatbotService.handleSendMainMenu(sender_psid);
+      break;
+    case "GUIDE_TO_USE":
+      await chatbotService.handleGuideToUseBot(sender_psid);
       break;
     case "LUNCH_MENU":
       await chatbotService.handleSendLunchMenu(sender_psid);

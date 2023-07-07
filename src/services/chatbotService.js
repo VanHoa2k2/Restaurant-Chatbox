@@ -31,40 +31,39 @@ const IMAGE_DETAIL_ROOMS = "https://bit.ly/eric-bot-18";
 const IMAGE_GIF_WELCOME = "https://bit.ly/eric-bot-1-2";
 
 async function callSendAPI(sender_psid, response) {
-  return new Promise(async(resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       // Construct the message body
-  let request_body = {
-    recipient: {
-      id: sender_psid,
-    },
-    message: response,
-  };
+      let request_body = {
+        recipient: {
+          id: sender_psid,
+        },
+        message: response,
+      };
 
-  await sendMarkReadMessage(sender_psid);
-  await sendTypingon(sender_psid);
+      await sendMarkReadMessage(sender_psid);
+      await sendTypingon(sender_psid);
 
-  // Send the HTTP request to the Messenger Platform
-  request(
-    {
-      uri: "https://graph.facebook.com/v17.0/me/messages",
-      qs: { access_token: PAGE_ACCESS_TOKEN },
-      method: "POST",
-      json: request_body,
-    },
-    (err, res, body) => {
-      if (!err) {
-        resolve("message sent!");
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }
-  );
+      // Send the HTTP request to the Messenger Platform
+      request(
+        {
+          uri: "https://graph.facebook.com/v17.0/me/messages",
+          qs: { access_token: PAGE_ACCESS_TOKEN },
+          method: "POST",
+          json: request_body,
+        },
+        (err, res, body) => {
+          if (!err) {
+            resolve("message sent!");
+          } else {
+            console.error("Unable to send message:" + err);
+          }
+        }
+      );
     } catch (e) {
       reject(e);
     }
-  })
-  
+  });
 }
 
 function sendTypingon(sender_psid, response) {
@@ -709,6 +708,55 @@ let handleShowDetailRooms = (sender_psid) => {
   });
 };
 
+let handleGuideToUseBot = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // send an image
+      let username = await getUserName(sender_psid);
+      let response1 = {
+        text: `Xin chào bạn ${username}, mình là chatbot nhà hàng Văn Hòa. \n Để biết thêm thông tin, bạn vui lòng xem video bên dưới 😊`,
+      };
+
+      // send a button template: video, buttons
+      let response2 = getBotMediaTemplate(sender_psid);
+
+      await callSendAPI(sender_psid, response1);
+      await callSendAPI(sender_psid, response2);
+
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getBotMediaTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "media",
+        elements: [
+          {
+            media_type: "video",
+            // attachment_id: "1759825294434718",
+            url: "https://www.facebook.com/VanHoaRestaurant/videos/1759825294434718",
+            buttons: [
+              {
+                type: "postback",
+                title: "MENU CHÍNH",
+                payload: "MAIN_MENU",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  return response;
+};
+
 module.exports = {
   handleGetStarted: handleGetStarted,
   handleSendMainMenu: handleSendMainMenu,
@@ -721,4 +769,5 @@ module.exports = {
   handleShowDetailRooms: handleShowDetailRooms,
   callSendAPI: callSendAPI,
   getUserName: getUserName,
+  handleGuideToUseBot: handleGuideToUseBot,
 };
