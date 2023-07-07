@@ -236,12 +236,7 @@ let getStartedQuickReplyTemplate = () => {
       },
       {
         content_type: "text",
-        title: "ĐẶT BÀN",
-        payload: "<POSTBACK_PAYLOAD>",
-      },
-      {
-        content_type: "text",
-        title: "HD SỬ DỤNG BOT",
+        title: "HƯỚNG DẪN SỬ DỤNG BOT",
         payload: "GUIDE_TO_USE",
       },
     ],
